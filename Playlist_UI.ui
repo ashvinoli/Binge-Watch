@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>977</width>
-    <height>294</height>
+    <height>328</height>
    </rect>
   </property>
   <property name="font">
@@ -78,12 +78,12 @@
      <rect>
       <x>90</x>
       <y>230</y>
-      <width>101</width>
+      <width>130</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>Resume Watching</string>
+     <string>Resume/Start Watching</string>
     </property>
    </widget>
    <widget class="QScrollArea" name="scrollarea_list">
@@ -138,7 +138,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>220</x>
       <y>230</y>
       <width>101</width>
       <height>21</height>
@@ -151,7 +151,7 @@
    <widget class="QLineEdit" name="entry_curplay">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>310</x>
       <y>230</y>
       <width>500</width>
       <height>20</height>
@@ -184,6 +184,29 @@
      <string>Next</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_from">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>260</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>From:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="entry_watchfrom">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>260</y>
+      <width>90</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
    <zorder>scrollarea_list</zorder>
    <zorder>list_locations</zorder>
    <zorder>label_show</zorder>
@@ -195,6 +218,8 @@
    <zorder>entry_curplay</zorder>
    <zorder>button_prev</zorder>
    <zorder>button_next</zorder>
+   <zorder>label_from</zorder>
+   <zorder>entry_watchfrom</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

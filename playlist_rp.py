@@ -18,9 +18,9 @@ class playlist:
         self.file_name = os.path.join(self.cur_dir,"playlist.txt")
         self.create_file()
 
-    def init_play_status(self):
+    def init_play_status(self,start_at):
         if len(self.list_of_videos)>0:
-            self.list_of_videos[0].file_status = "True"
+            self.list_of_videos[start_at].file_status = "True"
 
     def save_file_status(self):
         my_file = open(self.file_name,"w")
@@ -33,7 +33,7 @@ class playlist:
             my_file = open(self.file_name,"w")
             my_file.close()
         
-    def read_file(self):
+    def read_file(self,start_at=0):
         my_file = open(self.file_name,"r")
         all_lines = my_file.readlines()
         length = len(all_lines)
@@ -52,11 +52,11 @@ class playlist:
                 if self.isvideo(file_name):
                     temp = video_file(file_name,"False")
                     self.list_of_videos.append(temp)
-            self.init_play_status()
+            self.init_play_status(start_at)
             self.save_file_status()
 
-    def play_it(self):
-        self.read_file()
+    def play_it(self,start_at=0):
+        self.read_file(start_at)
         if len(self.list_of_videos)>0:
             for item in self.list_of_videos:
                 if item.file_status=="True":

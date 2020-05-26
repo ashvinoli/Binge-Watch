@@ -71,7 +71,13 @@ class Ui(QMainWindow):
         if len(items)>0:
             location = items[0].text().rstrip("\n").replace("/","\\")
             play = playlist(location)
-            file_name = play.play_it()
+            start_at = self.entry_watchfrom.text()
+            self.entry_watchfrom.setText("")
+            if start_at != "":
+                start_at = int(start_at)-1
+            else:
+                start_at = 0
+            file_name = play.play_it(start_at)
             if file_name is not None:
                 file_name = file_name.split("\\")[-1]
                 self.entry_curplay.setText(file_name)
