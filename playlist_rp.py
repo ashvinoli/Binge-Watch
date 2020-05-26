@@ -53,6 +53,7 @@ class playlist:
                     temp = video_file(file_name,"False")
                     self.list_of_videos.append(temp)
             self.init_play_status(start_at)
+            self.list_of_videos = sorted(self.list_of_videos,key = lambda x:x.file_name)
             self.save_file_status()
 
     def play_it(self,start_at=0):

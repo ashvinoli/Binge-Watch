@@ -19,7 +19,8 @@ remembers which episode you left off, and with correct playback resume settings 
 previous or next episodes. 
 
 ## First Run
-During first run you can specify which episode to start at, but once set it won't work further. If you made a mistake, delete the "playlist.txt" file in the series 
+During first run you can specify which episode to start at, but once set it won't work further. If nothing is specified playing starts from first episode.
+If you made a mistake, delete the "playlist.txt" file in the series 
 directory or just next or prev if the episode is close by. 
 
 ## Manual Change
