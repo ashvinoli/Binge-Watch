@@ -71,8 +71,12 @@ class Ui(QMainWindow):
         if len(items)>0:
             location = items[0].text().rstrip("\n").replace("/","\\")
             play = playlist(location)
-            file_name = play.play_it().split("\\")[-1]
-            self.entry_curplay.setText(file_name)
+            file_name = play.play_it()
+            if file_name is not None:
+                file_name = file_name.split("\\")[-1]
+                self.entry_curplay.setText(file_name)
+            else:
+                self.entry_curplay.setText("No video files in the directory!")
 
     def play_next(self):
         items = self.list_locations.selectedItems()

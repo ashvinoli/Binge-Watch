@@ -19,7 +19,8 @@ class playlist:
         self.create_file()
 
     def init_play_status(self):
-        self.list_of_videos[0].file_status = "True"
+        if len(self.list_of_videos)>0:
+            self.list_of_videos[0].file_status = "True"
 
     def save_file_status(self):
         my_file = open(self.file_name,"w")
@@ -52,39 +53,43 @@ class playlist:
                     temp = video_file(file_name,"False")
                     self.list_of_videos.append(temp)
             self.init_play_status()
+            self.save_file_status()
 
     def play_it(self):
         self.read_file()
-        for item in self.list_of_videos:
-            if item.file_status=="True":
-                subprocess.Popen(["vlc.exe", item.file_name])
-                return item.file_name
+        if len(self.list_of_videos)>0:
+            for item in self.list_of_videos:
+                if item.file_status=="True":
+                    subprocess.Popen(["vlc.exe", item.file_name])
+                    return item.file_name
     
     def play_next(self):
         self.read_file()
-        if self.list_of_videos[-1].file_status == "True":
-            self.list_of_videos[-1].file_status = "False"
-            self.list_of_videos[0].file_status = "True"
-        else:
-            for i in range(len(self.list_of_videos)-1):
-                if self.list_of_videos[i].file_status == "True":
-                    self.list_of_videos[i].file_status = "False"
-                    self.list_of_videos[i+1].file_status = "True"
-                    break
-        self.save_file_status()
+        if len(self.list_of_videos)>0:
+            if self.list_of_videos[-1].file_status == "True":
+                self.list_of_videos[-1].file_status = "False"
+                self.list_of_videos[0].file_status = "True"
+            else:
+                for i in range(len(self.list_of_videos)-1):
+                    if self.list_of_videos[i].file_status == "True":
+                        self.list_of_videos[i].file_status = "False"
+                        self.list_of_videos[i+1].file_status = "True"
+                        break
+            self.save_file_status()
 
     def play_prev(self):
         self.read_file()
-        if self.list_of_videos[0].file_status == "True":
-            self.list_of_videos[0].file_status = "False"
-            self.list_of_videos[-1].file_status = "True"
-        else:
-            for i in range(1,len(self.list_of_videos)):
-                if self.list_of_videos[i].file_status == "True":
-                    self.list_of_videos[i].file_status = "False"
-                    self.list_of_videos[i-1].file_status = "True"
-                    break
-        self.save_file_status()
+        if len(self.list_of_videos)>0:
+            if self.list_of_videos[0].file_status == "True":
+                self.list_of_videos[0].file_status = "False"
+                self.list_of_videos[-1].file_status = "True"
+            else:
+                for i in range(1,len(self.list_of_videos)):
+                    if self.list_of_videos[i].file_status == "True":
+                        self.list_of_videos[i].file_status = "False"
+                        self.list_of_videos[i-1].file_status = "True"
+                        break
+            self.save_file_status()
         
     def isvideo(self,file_name):
         formats = (".webm",".mp4",".avi",".flv",".mkv")
