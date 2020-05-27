@@ -25,6 +25,7 @@ class Ui(QMainWindow):
         self.button_prev.clicked.connect(self.play_prev)
         self.button_next.clicked.connect(self.play_next)
         self.button_deleteselected.clicked.connect(self.delete_selected)
+        self.entry_watchfrom.textChanged.connect(self.text_changed)
         
     def read_series(self):
         if os.path.exists(self.filename):
@@ -97,6 +98,11 @@ class Ui(QMainWindow):
             play = playlist(location)
             play.play_prev()
             self.resume()
+
+    def text_changed(self):
+        if not self.entry_watchfrom.text().isdigit():
+            if self.entry_watchfrom.text()!="":
+                self.entry_watchfrom.setText(self.entry_watchfrom.text()[:-1])
         
 def run_function():
     app = QApplication(sys.argv)
