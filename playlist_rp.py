@@ -20,8 +20,11 @@ class playlist:
 
     def init_play_status(self,start_at):
         if len(self.list_of_videos)>0:
-            self.list_of_videos[start_at].file_status = "True"
-
+            if (start_at < len(self.list_of_videos)):
+                self.list_of_videos[start_at].file_status = "True"
+            else:
+                self.list_of_videos[0].file_status = "True"
+                
     def save_file_status(self):
         my_file = open(self.file_name,"w")
         for item in self.list_of_videos:
@@ -62,7 +65,7 @@ class playlist:
         else:
             self.read_file(start_at)
         if len(self.list_of_videos)>0:
-            if start_at != "":
+            if start_at != "" and (start_at < len(self.list_of_videos)):
                 for i in range(len(self.list_of_videos)):
                     if i==start_at:
                         self.list_of_videos[i].file_status = "True"
