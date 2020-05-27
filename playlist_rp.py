@@ -56,9 +56,19 @@ class playlist:
             self.list_of_videos = sorted(self.list_of_videos,key = lambda x:x.file_name)
             self.save_file_status()
 
-    def play_it(self,start_at=0):
-        self.read_file(start_at)
+    def play_it(self,start_at):
+        if start_at == "":
+            self.read_file(0)
+        else:
+            self.read_file(start_at)
         if len(self.list_of_videos)>0:
+            if start_at != "":
+                for i in range(len(self.list_of_videos)):
+                    if i==start_at:
+                        self.list_of_videos[i].file_status = "True"
+                    else:
+                        self.list_of_videos[i].file_status = "False"
+                self.save_file_status()
             for item in self.list_of_videos:
                 if item.file_status=="True":
                     subprocess.Popen(["vlc.exe", item.file_name])

@@ -75,8 +75,6 @@ class Ui(QMainWindow):
             self.entry_watchfrom.setText("")
             if start_at != "":
                 start_at = int(start_at)-1
-            else:
-                start_at = 0
             file_name = play.play_it(start_at)
             if file_name is not None:
                 file_name = file_name.split("\\")[-1]
