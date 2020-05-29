@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>977</width>
-    <height>328</height>
+    <height>570</height>
    </rect>
   </property>
   <property name="font">
@@ -207,6 +207,59 @@
      </rect>
     </property>
    </widget>
+   <widget class="QLabel" name="label_show_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>290</y>
+      <width>131</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>All Sub-Directories:</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="list_sub_locations">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>330</y>
+      <width>951</width>
+      <height>192</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QScrollArea" name="scroll_list_sub_locations">
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>329</y>
+      <width>951</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>949</width>
+       <height>189</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <zorder>scroll_list_sub_locations</zorder>
    <zorder>scrollarea_list</zorder>
    <zorder>list_locations</zorder>
    <zorder>label_show</zorder>
@@ -220,6 +273,8 @@
    <zorder>button_next</zorder>
    <zorder>label_from</zorder>
    <zorder>entry_watchfrom</zorder>
+   <zorder>label_show_2</zorder>
+   <zorder>list_sub_locations</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

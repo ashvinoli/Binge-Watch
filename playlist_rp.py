@@ -13,7 +13,6 @@ class playlist:
             self.list_of_videos = []
         else:
             self.list_of_videos = list_of_videos
-        
         self.cur_dir = cur_dir
         self.file_name = os.path.join(self.cur_dir,"playlist.txt")
         self.create_file()

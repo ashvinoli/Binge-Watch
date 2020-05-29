@@ -13,8 +13,10 @@ python Ui.py
 ```
 
 ## General Information
-After the main windows pops up. Add your movie/series directories one at a time. The episodes must be contained inside the selected directory.
-Select any one of the series listed in the screen after some movie/series have been added. Then click "Resume/Start Watching" to start watching
+After the main windows pops up. Add your movie/series directories. The program is capable of looking one directory deeper.
+This means if your inserted directory has subfolders that contain the video files then the subfolders will be listed.
+Select any one of the series listed in the screen after some movie/series have been added. If there are sub folders
+click the subfolder in the list box at the bottom of window. Then click "Resume/Start Watching" to start watching
 from the episode you left off. The program remembers which episode you left off, and with correct playback resume settings in VLC the binge-watching experience is great. Click "Prev" or "Next" to watch
 previous or next episodes. 
 

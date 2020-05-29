@@ -4,8 +4,6 @@ from playlist_rp import playlist, video_file
 import sys
 import os
 
-
-
 class Ui(QMainWindow):
     def __init__(self):
         super(Ui, self).__init__()
@@ -15,10 +13,12 @@ class Ui(QMainWindow):
         self.threads = {}
         self.connect_functions()
         self.show()
-
+        
     def connect_functions(self):
         self.reset_listbox()
         self.scrollarea_list.setWidget(self.list_locations)
+        self.scroll_list_sub_locations.setWidget(self.list_sub_locations)
+        self.list_locations.itemClicked.connect(self.list_locations_clicked)
         self.button_add.clicked.connect(self.add_me)
         self.button_deleteall.clicked.connect(self.delete_all)
         self.button_resume.clicked.connect(self.resume)
@@ -27,6 +27,17 @@ class Ui(QMainWindow):
         self.button_deleteselected.clicked.connect(self.delete_selected)
         self.entry_watchfrom.textChanged.connect(self.text_changed)
         
+    def list_locations_clicked(self):
+        selected_items = self.list_locations.selectedItems()
+        self.list_sub_locations.clear()
+        if len(selected_items)>0:
+            location = selected_items[0].text().rstrip("\n").replace("/","\\")
+            if location!="":
+                subdirs = [os.path.join(location,dir) for dir in os.listdir(location) if os.path.isdir(os.path.join(location,dir))]
+                if len(subdirs)>0:
+                    self.list_sub_locations.addItems(subdirs)        
+        
+
     def read_series(self):
         if os.path.exists(self.filename):
             series_file = open(self.filename,"r")
@@ -69,6 +80,9 @@ class Ui(QMainWindow):
             
     def resume(self):
         items = self.list_locations.selectedItems()
+        items_list_sub = self.list_sub_locations.selectedItems()
+        if len(items_list_sub)>0:
+            items = items_list_sub
         if len(items)>0:
             location = items[0].text().rstrip("\n").replace("/","\\")
             play = playlist(location)
@@ -85,6 +99,9 @@ class Ui(QMainWindow):
 
     def play_next(self):
         items = self.list_locations.selectedItems()
+        items_list_sub = self.list_sub_locations.selectedItems()
+        if len(items_list_sub)>0:
+            items = items_list_sub
         if len(items)>0:
             location = items[0].text().rstrip("\n").replace("/","\\")
             play = playlist(location)
@@ -93,6 +110,9 @@ class Ui(QMainWindow):
             
     def play_prev(self):
         items = self.list_locations.selectedItems()
+        items_list_sub = self.list_sub_locations.selectedItems()
+        if len(items_list_sub)>0:
+            items = items_list_sub
         if len(items)>0:
             location = items[0].text().rstrip("\n").replace("/","\\")
             play = playlist(location)
