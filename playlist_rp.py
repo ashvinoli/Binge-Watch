@@ -56,6 +56,7 @@ class playlist:
             for file_name in all_files:
                 if self.isvideo(file_name):
                     video_files.append(file_name)
+            video_files.sort()
             video_files = util_functions.sort_them(video_files)
             self.list_of_videos = [video_file(x,"False") for x in video_files]
             self.init_play_status(start_at)
