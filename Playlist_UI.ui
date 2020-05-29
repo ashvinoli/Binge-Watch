@@ -55,8 +55,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Times New Roman</family>
-      <pointsize>12</pointsize>
+      <family>Cambria</family>
+      <pointsize>10</pointsize>
      </font>
     </property>
    </widget>
@@ -234,6 +234,11 @@
       <width>951</width>
       <height>192</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Cambria</family>
+     </font>
     </property>
    </widget>
    <widget class="QScrollArea" name="scroll_list_sub_locations">

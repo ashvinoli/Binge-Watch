@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog
 from playlist_rp import playlist, video_file
+from util_fun import util_functions
 import sys
 import os
 
@@ -35,6 +36,7 @@ class Ui(QMainWindow):
             if location!="":
                 subdirs = [os.path.join(location,dir) for dir in os.listdir(location) if os.path.isdir(os.path.join(location,dir))]
                 if len(subdirs)>0:
+                    subdirs = util_functions.sort_them(subdirs)
                     self.list_sub_locations.addItems(subdirs)        
         
 

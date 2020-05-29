@@ -1,6 +1,7 @@
 import os
 import platform
 import subprocess
+from util_fun import util_functions
 
 class video_file:
     def __init__(self,file_name ="",file_status = ""):
@@ -27,6 +28,7 @@ class playlist:
     def save_file_status(self):
         my_file = open(self.file_name,"w")
         for item in self.list_of_videos:
+            item.file_name = item.file_name.replace('\u200b',"")
             my_file.write(item.file_name + "|" +item.file_status+"\n")
         my_file.close()
 
@@ -50,12 +52,13 @@ class playlist:
         else:
             my_file.close()
             all_files = map(lambda x:os.path.join(self.cur_dir,x),os.listdir(self.cur_dir))
+            video_files = []
             for file_name in all_files:
                 if self.isvideo(file_name):
-                    temp = video_file(file_name,"False")
-                    self.list_of_videos.append(temp)
+                    video_files.append(file_name)
+            video_files = util_functions.sort_them(video_files)
+            self.list_of_videos = [video_file(x,"False") for x in video_files]
             self.init_play_status(start_at)
-            self.list_of_videos = sorted(self.list_of_videos,key = lambda x:x.file_name)
             self.save_file_status()
 
     def play_it(self,start_at):
