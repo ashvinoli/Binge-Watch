@@ -19,6 +19,7 @@ class util_functions:
                 episode_number = 0
             temp = episode(episode_name,episode_number)
             all_episodes.append(temp)
+        all_episodes.sort(key = lambda x:x.episode_name)
         all_episodes.sort(key = lambda x:x.episode_number)
         return [x.episode_name for x in all_episodes]
 

@@ -45,7 +45,7 @@ class Ui(QMainWindow):
             series_file = open(self.filename,"r")
             all_lines = series_file.readlines()
             series_file.close()
-            return all_lines
+            return [line.rstrip("\n") for line in all_lines]
         else:
             series_file = open(self.filename,"w")
             series_file.close()
@@ -75,18 +75,27 @@ class Ui(QMainWindow):
             file_open = open(self.filename,"w")
             for item in all_items:
                 if item != selected_items[0]:
-                    file_open.write(item.text())
+                    file_open.write(item.text()+"\n")
             file_open.close()
             self.reset_listbox()
             
-            
-    def resume(self):
+    def prepare_for_windows(self,items):
+        if os.name == 'nt':
+            return items[0].text().replace("/","\\")
+        else:
+            return items[0]
+
+    def get_items(self):
         items = self.list_locations.selectedItems()
         items_list_sub = self.list_sub_locations.selectedItems()
         if len(items_list_sub)>0:
             items = items_list_sub
+        return items
+
+    def resume(self):
+        items = self.get_items()
         if len(items)>0:
-            location = items[0].text().rstrip("\n").replace("/","\\")
+            location = self.prepare_for_windows(items)
             play = playlist(location)
             start_at = self.entry_watchfrom.text()
             self.entry_watchfrom.setText("")
@@ -94,29 +103,23 @@ class Ui(QMainWindow):
                 start_at = int(start_at)-1
             file_name = play.play_it(start_at)
             if file_name is not None:
-                file_name = file_name.split("\\")[-1]
+                file_name = os.path.split(file_name)[-1]
                 self.entry_curplay.setText(file_name)
             else:
                 self.entry_curplay.setText("No video files in the directory!")
 
     def play_next(self):
-        items = self.list_locations.selectedItems()
-        items_list_sub = self.list_sub_locations.selectedItems()
-        if len(items_list_sub)>0:
-            items = items_list_sub
+        items = self.get_items()
         if len(items)>0:
-            location = items[0].text().rstrip("\n").replace("/","\\")
+            location = self.prepare_for_windows(items)
             play = playlist(location)
             play.play_next()
             self.resume()
             
     def play_prev(self):
-        items = self.list_locations.selectedItems()
-        items_list_sub = self.list_sub_locations.selectedItems()
-        if len(items_list_sub)>0:
-            items = items_list_sub
+        items = self.get_items()
         if len(items)>0:
-            location = items[0].text().rstrip("\n").replace("/","\\")
+            location = self.prepare_for_windows(items)
             play = playlist(location)
             play.play_prev()
             self.resume()
