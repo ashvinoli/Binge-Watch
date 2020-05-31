@@ -54,7 +54,7 @@ class playlist:
             all_files = map(lambda x:os.path.join(self.cur_dir,x),os.listdir(self.cur_dir))
             video_files = []
             for file_name in all_files:
-                if self.isvideo(file_name):
+                if util_functions.isvideo(file_name):
                     video_files.append(file_name)
             video_files = util_functions.sort_them(video_files)
             self.list_of_videos = c_list([video_file(x,"False") for x in video_files])
@@ -95,11 +95,7 @@ class playlist:
     def play_prev(self):
         self.play_custom(-1)
         
-    def isvideo(self,file_name):
-        formats = (".webm",".mp4",".avi",".flv",".mkv")
-        if file_name.endswith(formats):
-            return True
-        return False
+    
 
 
 

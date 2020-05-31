@@ -37,5 +37,11 @@ class util_functions:
         all_episodes.sort(key = lambda x:x.episode_number)
         return [x.episode_name for x in all_episodes]
 
+    @classmethod
+    def isvideo(cls,file_name):
+        formats = (".webm",".mp4",".avi",".flv",".mkv",".m4v",".mov",".wmv")
+        if file_name.endswith(formats):
+            return True
+        return False
 
 
