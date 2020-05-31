@@ -1,5 +1,19 @@
 import re
 import os
+
+class c_list(list):
+    def __init__(self,*args):
+        if len(args)==1 and isinstance(args[0],list):
+            super().__init__(args[0])
+        else:
+            super().__init__(args)
+
+    def __getitem__(self,key):
+        if key > len(self)-1:
+            return self[key % len(self)]
+        else:
+            return super().__getitem__(key)
+            
 class episode:
     def __init__(self,episode,episode_number):
         self.episode_name = episode
