@@ -32,19 +32,21 @@ class Ui(QMainWindow):
         selected_items = self.list_locations.selectedItems()
         self.list_sub_locations.clear()
         if len(selected_items)>0:
-            location = selected_items[0].text().rstrip("\n").replace("/","\\")
+            location = selected_items[0].text().rstrip("\n")
+            location = self.prepare_for_windows(location)
             if location!="":
-                subdirs = [os.path.join(location,dir) for dir in os.listdir(location) if os.path.isdir(os.path.join(location,dir))]
-                if len(subdirs)>0:
-                    subdirs = util_functions.sort_them(subdirs)
-                    self.list_sub_locations.addItems(subdirs)        
+                if os.path.exists(location):
+                    subdirs = [os.path.join(location,dir) for dir in os.listdir(location) if os.path.isdir(os.path.join(location,dir))]
+                    if len(subdirs)>0:
+                        subdirs = util_functions.sort_them(subdirs)
+                        self.list_sub_locations.addItems(subdirs)        
         
-
     def read_series(self):
         if os.path.exists(self.filename):
-            series_file = open(self.filename,"r")
-            all_lines = series_file.readlines()
-            series_file.close()
+            with open(self.filename,"r") as series_file:
+                all_lines = [line for line in series_file.readlines() if os.path.exists(line.rstrip("\n"))]
+            with open(self.filename,"w") as series_file:
+                series_file.writelines(all_lines)
             return [line.rstrip("\n") for line in all_lines]
         else:
             series_file = open(self.filename,"w")
@@ -79,11 +81,11 @@ class Ui(QMainWindow):
             file_open.close()
             self.reset_listbox()
             
-    def prepare_for_windows(self,items):
+    def prepare_for_windows(self,item):
         if os.name == 'nt':
-            return items[0].text().replace("/","\\")
+            return item.replace("/","\\")
         else:
-            return items[0]
+            return item
 
     def get_items(self):
         items = self.list_locations.selectedItems()
@@ -95,7 +97,7 @@ class Ui(QMainWindow):
     def resume(self):
         items = self.get_items()
         if len(items)>0:
-            location = self.prepare_for_windows(items)
+            location = self.prepare_for_windows(items[0].text())
             play = playlist(location)
             start_at = self.entry_watchfrom.text()
             self.entry_watchfrom.setText("")
@@ -111,7 +113,7 @@ class Ui(QMainWindow):
     def play_next(self):
         items = self.get_items()
         if len(items)>0:
-            location = self.prepare_for_windows(items)
+            location = self.prepare_for_windows(items[0].text())
             play = playlist(location)
             play.play_next()
             self.resume()
@@ -119,7 +121,7 @@ class Ui(QMainWindow):
     def play_prev(self):
         items = self.get_items()
         if len(items)>0:
-            location = self.prepare_for_windows(items)
+            location = self.prepare_for_windows(items[0].text())
             play = playlist(location)
             play.play_prev()
             self.resume()
