@@ -94,6 +94,9 @@ class Ui(QMainWindow):
             items = items_list_sub
         return items
 
+    def movie_select(self):
+        self.entry_curplay.setText("No movie/series selected. Please select one above.")
+
     def resume(self):
         items = self.get_items()
         if len(items)>0:
@@ -109,6 +112,8 @@ class Ui(QMainWindow):
                 self.entry_curplay.setText(file_name)
             else:
                 self.entry_curplay.setText("No video files in the directory!")
+        else:
+            self.movie_select()
 
     def play_next(self):
         items = self.get_items()
@@ -117,6 +122,8 @@ class Ui(QMainWindow):
             play = playlist(location)
             play.play_next()
             self.resume()
+        else:
+            self.movie_select()
             
     def play_prev(self):
         items = self.get_items()
@@ -125,6 +132,8 @@ class Ui(QMainWindow):
             play = playlist(location)
             play.play_prev()
             self.resume()
+        else:
+            self.movie_select()
 
     def text_changed(self):
         if not self.entry_watchfrom.text().isdigit():
