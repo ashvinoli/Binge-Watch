@@ -20,6 +20,7 @@ class Ui(QMainWindow):
         self.scrollarea_list.setWidget(self.list_locations)
         self.scroll_list_sub_locations.setWidget(self.list_sub_locations)
         self.list_locations.itemClicked.connect(self.list_locations_clicked)
+        self.list_sub_locations.itemClicked.connect(self.list_sub_locations_clicked)
         self.button_add.clicked.connect(self.add_me)
         self.button_deleteall.clicked.connect(self.delete_all)
         self.button_resume.clicked.connect(self.resume)
@@ -40,7 +41,19 @@ class Ui(QMainWindow):
                     if len(subdirs)>0:
                         subdirs = util_functions.sort_them(subdirs)
                         self.list_sub_locations.addItems(subdirs)        
+                    else:
+                        self.save_last_loc(location)
+
+    def list_sub_locations_clicked(self):
+        items_list_sub = self.list_sub_locations.selectedItems()
+        if len(items_list_sub)>0:
+            self.save_last_loc(items_list_sub[0].text())
         
+    
+    def save_last_loc(self,location):
+        with open("last_location.txt","w") as f:
+            f.write(location)
+                            
     def read_series(self):
         if os.path.exists(self.filename):
             with open(self.filename,"r") as series_file:
@@ -88,19 +101,19 @@ class Ui(QMainWindow):
             return item
 
     def get_items(self):
-        items = self.list_locations.selectedItems()
-        items_list_sub = self.list_sub_locations.selectedItems()
-        if len(items_list_sub)>0:
-            items = items_list_sub
-        return items
+        try:
+            with open("last_location.txt","r") as f:
+                return f.readline()
+        except FileNotFoundError:
+            return ""
 
     def movie_select(self):
         self.entry_curplay.setText("No movie/series selected. Please select one above.")
 
     def resume(self):
-        items = self.get_items()
-        if len(items)>0:
-            location = self.prepare_for_windows(items[0].text())
+        file_path = self.get_items()
+        if file_path != "":
+            location = self.prepare_for_windows(file_path)
             play = playlist(location)
             start_at = self.entry_watchfrom.text()
             self.entry_watchfrom.setText("")
@@ -118,7 +131,7 @@ class Ui(QMainWindow):
     def play_next(self):
         items = self.get_items()
         if len(items)>0:
-            location = self.prepare_for_windows(items[0].text())
+            location = self.prepare_for_windows(items)
             play = playlist(location)
             play.play_next()
             self.resume()
@@ -128,7 +141,7 @@ class Ui(QMainWindow):
     def play_prev(self):
         items = self.get_items()
         if len(items)>0:
-            location = self.prepare_for_windows(items[0].text())
+            location = self.prepare_for_windows(items)
             play = playlist(location)
             play.play_prev()
             self.resume()
