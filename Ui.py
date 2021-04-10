@@ -86,10 +86,10 @@ class Ui(QMainWindow):
     def delete_selected(self):
         selected_items = self.list_locations.selectedItems()
         if len(selected_items)>0:
-            all_items = [self.list_locations.item(i) for i in range(self.list_locations.count()-1)]
+            all_items = [self.list_locations.item(i) for i in range(self.list_locations.count())]
             file_open = open(self.filename,"w")
             for item in all_items:
-                if item != selected_items[0]:
+                if item.text() != selected_items[0].text():
                     file_open.write(item.text()+"\n")
             file_open.close()
             self.reset_listbox()

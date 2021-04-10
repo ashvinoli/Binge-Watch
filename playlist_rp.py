@@ -76,8 +76,12 @@ class playlist:
                 self.save_file_status()
             for item in self.list_of_videos:
                 if item.file_status=="True":
-                    subprocess.Popen(["vlc.exe", item.file_name])
-                    return item.file_name
+                    vlc_location = os.path.join(os.environ["PROGRAMFILES"],"VideoLAN","VLC","vlc.exe")        
+                    if os.path.exists(vlc_location):
+                        subprocess.Popen([vlc_location, item.file_name])
+                        return item.file_name
+                    else:
+                        print("Please install VLC media player!.")
 
     def play_custom(self,custom):
         self.read_file()
