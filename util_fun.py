@@ -37,11 +37,12 @@ class util_functions:
                 all_numbers = True
             else:
                 all_numbers = False
-        if not all_numbers:
-            all_episodes.sort(key = lambda x:x.episode_name)
-        else:
+        if all_numbers:
             all_episodes.sort(key = lambda x:x.episode_number)
-        return [x.episode_name for x in all_episodes]
+            return [x.episode_name for x in all_episodes]
+        else:
+            return list_of_episodes
+        
         
 
     @classmethod
