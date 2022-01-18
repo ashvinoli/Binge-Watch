@@ -34,9 +34,9 @@ class util_functions:
                 actual_number = int("".join(episode_number))
                 temp = episode(episode_name,actual_number)
                 all_episodes.append(temp)
-                all_numbers = True
             else:
                 all_numbers = False
+                break
         if all_numbers:
             all_episodes.sort(key = lambda x:x.episode_number)
             return [x.episode_name for x in all_episodes]
