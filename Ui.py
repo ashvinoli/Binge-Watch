@@ -38,11 +38,9 @@ class Ui(QMainWindow):
             if location!="":
                 if os.path.exists(location):
                     subdirs = [os.path.join(location,dir) for dir in os.listdir(location) if os.path.isdir(os.path.join(location,dir))]
-                    if len(subdirs)>0:
-                        subdirs = util_functions.sort_them(subdirs)
-                        self.list_sub_locations.addItems(subdirs)        
-                    else:
-                        self.save_last_loc(location)
+                    subdirs = util_functions.sort_them(subdirs)
+                    self.list_sub_locations.addItems(subdirs)        
+                    self.save_last_loc(location)
 
     def list_sub_locations_clicked(self):
         items_list_sub = self.list_sub_locations.selectedItems()
